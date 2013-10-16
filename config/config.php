@@ -18,7 +18,7 @@ If you want a different default time format for this app, set it below
 
 # When email is sent out from the server, where should it come from?
 # Ideally, this should match the domain name
-	define('APP_EMAIL', 'webmaster@sample-app.com'); 
+	define('APP_EMAIL', 'mrmightypants@gmail.com'); 
 
 /* 
 A email designated to receive messages from the server. Examples:
@@ -31,7 +31,7 @@ A email designated to receive messages from the server. Examples:
 	define('SYSTEM_EMAIL', 'webmaster@myapp.com'); 
 
 # Default DB name for this app
-	define('DB_NAME', "myapp_com"); 
+	define('DB_NAME', "p2_mightypants_biz"); 
 
 # Timezone
 	define('TIMEZONE', 'America/New_York');
@@ -43,5 +43,5 @@ A email designated to receive messages from the server. Examples:
 	//define('SMTP_PASSWORD', '');
 
 # For extra security, you might want to set different salts than what the core uses
-	//define('PASSWORD_SALT', '');
-	//define('TOKEN_SALT', '');
+	define('PASSWORD_SALT', 'JYhwKi8eH97QQV0NbH3d5lG31A(l$IDY(_w0$ZQ4');
+	define('TOKEN_SALT', 'a7n-O6Gj9hF&@I%u^HqdY3mPkJ$ol7K64SUL#YT$');

@@ -33,7 +33,10 @@ class index_controller extends base_controller {
 		# Render the view
 			echo $this->template;
 
+
+
 	} # End of method
+
 	
 	
 } # End of class
