@@ -5,9 +5,60 @@
 }
 
 body {
+	background: url("/images/home_bg.png") #0333bb top center no-repeat;
 	font-family: Arial, sans-serif;
 }
 
+p {
+	margin: 10px 0;
+}
+
+a:link, a:visited, a:hover, a:active {
+	text-decoration: none;
+	font-size: 1em;
+}
+
+#wrapper {
+	width: 850px;
+	margin: 0 auto;
+	padding: 20px 10px;
+	border: 1px solid #555;
+	background-color: #fff;
+}
+
+#nav a {
+	display: inline-block;
+	margin: 25px 15px;
+	color: #eee;
+}
+
+#nav {
+	width: 872px;
+	height: 65px;
+	margin: 150px auto;
+	margin-bottom: 0;
+	background-color: #222;
+	text-align: right;
+}
+
+#contentLeft {
+	width: 450px;
+	height: 360px;
+	float: left;
+}
+
+#contentRight {
+	width: 350px;
+	height: 360px;
+	float: left;
+}
+
+
 input {
 	border: 1px solid green;
+}
+
+.clearfloat {
+	height: 0px;
+	clear: both;
 }
