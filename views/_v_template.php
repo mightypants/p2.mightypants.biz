@@ -42,5 +42,6 @@
 	<?php if(isset($client_files_body)) echo $client_files_body; ?>
 
 	</div>
+	<div id="foot"></div>
 </body>
 </html>

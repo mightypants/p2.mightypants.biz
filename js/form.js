@@ -11,7 +11,7 @@ function validateEmailFormat(field) {
 
 function validateAlphaNum(field) {
 	var regexAlphaNum = /.*[^\w].*/;
-	return regexAlphaNum.test(field.value);
+	return !regexAlphaNum.test(field.value);
 }
 
 function validatePWChars(field) {
@@ -21,13 +21,25 @@ function validatePWChars(field) {
 }
 
 function showInvalid(field){
-	field.childNodes[1].style.color = '#f66';
-	field.childNodes[5].style.display = 'inline-block';
+	field.childNodes[1].style.color = '#ad1010';
+	
+	if(field.childNodes[5].getAttribute('class') == 'tooltipIcon') {
+		field.childNodes[5].setAttribute('src') = '/images/tooltip_warn.png';
+	} 
+	else {
+		field.childNodes[5].style.display = 'inline-block';
+	}
 }
 
 function clearWarnings(field){
 	field.childNodes[1].style.color = '#000';
-	field.childNodes[5].style.display = 'none';
+	
+	if(field.childNodes[5].getAttribute('class') == 'tooltipIcon') {
+		field.childNodes[5].setAttribute('src') = '/images/tooltip.png';
+	} 
+	else {
+		field.childNodes[5].style.display = 'none';
+	}
 }
 
 function validateForm(currField) {
@@ -40,22 +52,21 @@ function validateForm(currField) {
 			validField = false;
 		}
 	}
-	//check for valid and unused username
-	else if (currField.getAttribute('id') == 'username') {
-		//var userAlphaNumResult = validateAlphaNum(currField);
-		if(!validateLength(currField, 5, 16)) { 
+	//check for valid username
+	else if (currField.getAttribute('id') == 'user_name') {
+		var userLengthResult = validateLength(currField, 5, 16);
+		var userAlphaNumResult = validateAlphaNum(currField);
+		if(!userLengthResult || !userAlphaNumResult) { 
 			validField = false;
 		}
 	}
 	else if (currField.getAttribute('id') == 'first_name') {
-		//var userAlphaNumResult = validateAlphaNum(currField);
-		if(!validateLength(currField, 2, 16)) { 
+		if(!validateLength(currField, 1, 25)) { 
 			validField = false;
 		}
 	}
 	else if (currField.getAttribute('id') == 'last_name') {
-		//var userAlphaNumResult = validateAlphaNum(currField);
-		if(!validateLength(currField, 2, 16)) { 
+		if(!validateLength(currField, 1, 25)) { 
 			validField = false;
 		}
 	}
@@ -63,6 +74,7 @@ function validateForm(currField) {
 	else if (currField.getAttribute('id') == 'password') {
 		var pwLengthResult = validateLength(currField, 5, 16);
 		var pwCharsResult = validatePWChars(currField);
+		var alphaNumResult = validateAlphaNum(currField);
 		if(!pwLengthResult || !pwCharsResult){
 			validField = false;
 		}
@@ -83,8 +95,15 @@ function setupFieldValidation(currField) {
 	}
 }
 
+
 var reqFields = document.getElementsByClassName('reqTextField');
 
 for (i = 0; i < reqFields.length; i++) {
 	setupFieldValidation(reqFields[i]);
 }
+
+
+
+
+
+

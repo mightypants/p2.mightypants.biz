@@ -10,6 +10,7 @@
 }
 
 .reqTextField {
+    width: 230px;
     margin: 10px 5px;
     padding: 6px;
     border: 2px solid #6f6;
@@ -18,16 +19,33 @@
 
 .invalidWarning {
   display: none;
-  color: #f66;
+  color: #ad1010;
 }
 
 .submitBtn {
-    margin: 5px 5px 5px 0px;
-    padding: 3px 7px;
-    border: 1px solid #444;
-    font-size: .9em;
+    margin: 10px 5px 5px 265px;
+    padding: 5px 12px;
+    background-color: #fff;
+    border: 2px solid #0333bb;
+    font-size: 1em;
+    font-weight: bold;
+    color: #0333bb;
 }
 
 .error {
-    color: #f66;
+    height: 20px;
+    margin-top: 15px;
+    font-size: .9em;
+    color: #ad1010;
+}
+
+.tooltipIcon {
+    width: 20px;
+    height: 20px;
+    vertical-align: -5px;
+    display: inline-block;
+}
+
+.tooltip {
+    display: none;
 }
