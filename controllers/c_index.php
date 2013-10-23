@@ -25,7 +25,7 @@ class index_controller extends base_controller {
 	        $output->contentLeft = View::instance('v_index_index');
 			$output->contentRight = View::instance('v_users_login');	
 
-		    $client_files_head = Array("/css/form.css");
+        	$client_files_head = Array("/css/form.css","/css/layout_short.css");
 	        $output->client_files_head = Utils::load_client_files($client_files_head);  
 
 	        # Set client files that need to load before the closing </body> tag

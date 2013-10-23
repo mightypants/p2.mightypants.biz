@@ -10,7 +10,6 @@ class users_controller extends base_controller {
     }
 
     public function signup($error = NULL) {
-
         # Setup view
         $output = $this->template;
         $output->title   = "Sign Up";
@@ -18,14 +17,12 @@ class users_controller extends base_controller {
         $output->contentRight = View::instance('v_users_signup');
         $output->contentRight->error = $error;
 
-        $client_files_head = Array("/css/form.css","/css/styles_a.css");
+        # Set client files within the header and body
+        $client_files_head = Array("/css/form.css","/css/layout_short.css");
         $output->client_files_head = Utils::load_client_files($client_files_head);  
-
-        # Set client files that need to load before the closing </body> tag
         $client_files_body = Array("/js/form.js");
         $output->client_files_body = Utils::load_client_files($client_files_body);
 
-        # Render template
         echo $output;
 
     }
@@ -41,7 +38,6 @@ class users_controller extends base_controller {
             else {
                 $validForm = true;
             }
-
         }
 
         if(!$validForm) {
@@ -52,30 +48,30 @@ class users_controller extends base_controller {
             $_POST['created']  = Time::now();
             $_POST['modified'] = Time::now();
 
-                # Encrypt the password  
+            # Encrypt the password  
             $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);            
 
-            # Create an encrypted token via their email address and a random string
+            # Create an encrypted token for user's sessions
             $_POST['token'] = sha1(TOKEN_SALT.$_POST['user_name'].Utils::generate_random_string()); 
 
             # Insert this user into the database
             $user_id = DB::instance(DB_NAME)->insert('users', $_POST); 
 
-             Router::redirect("/users/login");
+            Router::redirect("/users/login/");
         }
     }
 
     public function login($error = NULL) {
+        # Setup view
         $output = $this->template;
         $output->title = "Login";
         $output->contentLeft = View::instance('v_index_index');
         $output->contentRight = View::instance('v_users_login');
         $output->contentRight->error = $error;
 
-        $client_files_head = Array("/css/form.css","/css/styles_a.css");
+        # Set client files within the header and body
+        $client_files_head = Array("/css/form.css","/css/layout_short.css");
         $output->client_files_head = Utils::load_client_files($client_files_head);  
-
-        # Set client files that need to load before the closing </body> tag
         $client_files_body = Array("/js/form.js");
         $output->client_files_body = Utils::load_client_files($client_files_body);
 
@@ -83,14 +79,13 @@ class users_controller extends base_controller {
     }
 
     public function p_login() {
-        # Sanitize the user entered data to prevent any funny-business (re: SQL Injection Attacks)
+        # Sanitize the user entered data
         $_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
         # Hash submitted password so we can compare it against one in the db
         $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 
-        # Search the db for this email and password
-        # Retrieve the token if it's available
+        # Search the db for this username and password, retrieve token
         $q = "SELECT token 
             FROM users 
             WHERE user_name = '".$_POST['user_name']."' 
@@ -98,15 +93,10 @@ class users_controller extends base_controller {
 
         $token = DB::instance(DB_NAME)->select_field($q);
 
-        # If we didn't find a matching token in the database, it means login failed
+        #redirect with error if token failed, otherwise redirect to user profile
         if(!$token) {
-
-            # Send them back to the login page
-            Router::redirect("/users/login/error"); 
-            
-        # But if we did, login succeeded! 
+            Router::redirect("/users/login/error");             
         } else {
-            
             setcookie("token", $token, strtotime('+1 year'), '/');
             Router::redirect("/users/profile");
         }
@@ -116,15 +106,10 @@ class users_controller extends base_controller {
     public function logout() {
         # Generate and save a new token for next login
         $new_token = sha1(TOKEN_SALT.$this->user->user_name.Utils::generate_random_string());
-
-        # Create the data array we'll use with the update method
-        # In this case, we're only updating one field, so our array only has one entry
         $data = Array("token" => $new_token);
-
-        # Do the update
         DB::instance(DB_NAME)->update("users", $data, "WHERE token = '".$this->user->token."'");
 
-        # Delete their token cookie by setting it to a date in the past - effectively logging them out
+        # Delete token cookie
         setcookie("token", "", strtotime('-1 year'), '/');
 
         # Send them back to the main index.
@@ -151,15 +136,12 @@ class users_controller extends base_controller {
             $output->content->user_name = NULL;
         }
 
-         #  Set client files that need to load in the <head>
-        $client_files_head = Array("/css/profile.css");
+        # Set client files within the header and body
+        $client_files_head = Array("/css/form.css","/css/layout_tall.css");
         $output->client_files_head = Utils::load_client_files($client_files_head);  
-
-        # Set client files that need to load before the closing </body> tag
         $client_files_body = Array("/js/profile.min.js");
         $output->client_files_body = Utils::load_client_files($client_files_body);
 
-        # Render View
         echo $output;
 
     }

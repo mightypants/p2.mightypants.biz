@@ -1,0 +1,41 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+
+body {
+	background-color: #fff;
+	font-family: Arial, sans-serif;
+	color: #333;
+}
+
+h1 {}
+h2 {text-align: center; font-size: 1.5em}
+h3 {}
+h4 {}
+
+p {
+	margin: 0 0 10px 0;
+}
+
+a:link, a:visited, a:hover, a:active {
+	text-decoration: none;
+	font-size: 1em;
+}
+
+#nav a {
+	display: inline-block;
+	margin: 17px 15px;
+	color: #eee;
+}
+
+.clearfloat {
+	height: 0px;
+	clear: both;
+}
+
+#welcomeBot {
+	display: block;
+	margin: 45px;
+}
