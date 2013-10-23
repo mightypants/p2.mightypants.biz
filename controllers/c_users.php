@@ -18,7 +18,7 @@ class users_controller extends base_controller {
         $output->contentRight = View::instance('v_users_signup');
         $output->contentRight->error = $error;
 
-        $client_files_head = Array("/css/form.css");
+        $client_files_head = Array("/css/form.css","/css/styles_a.css");
         $output->client_files_head = Utils::load_client_files($client_files_head);  
 
         # Set client files that need to load before the closing </body> tag
@@ -72,7 +72,7 @@ class users_controller extends base_controller {
         $output->contentRight = View::instance('v_users_login');
         $output->contentRight->error = $error;
 
-        $client_files_head = Array("/css/form.css");
+        $client_files_head = Array("/css/form.css","/css/styles_a.css");
         $output->client_files_head = Utils::load_client_files($client_files_head);  
 
         # Set client files that need to load before the closing </body> tag

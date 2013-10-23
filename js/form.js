@@ -21,10 +21,10 @@ function validatePWChars(field) {
 }
 
 function showInvalid(field){
-	field.childNodes[1].style.color = '#ad1010';
+	field.childNodes[1].style.color = '#f01010';
 	
 	if(field.childNodes[5].getAttribute('class') == 'tooltipIcon') {
-		field.childNodes[5].setAttribute('src') = '/images/tooltip_warn.png';
+		field.childNodes[5].src = '/images/tooltip_warn.png';
 	} 
 	else {
 		field.childNodes[5].style.display = 'inline-block';
@@ -35,7 +35,7 @@ function clearWarnings(field){
 	field.childNodes[1].style.color = '#000';
 	
 	if(field.childNodes[5].getAttribute('class') == 'tooltipIcon') {
-		field.childNodes[5].setAttribute('src') = '/images/tooltip.png';
+		field.childNodes[5].src = '/images/tooltip.png';
 	} 
 	else {
 		field.childNodes[5].style.display = 'none';
@@ -95,13 +95,24 @@ function setupFieldValidation(currField) {
 	}
 }
 
-
 var reqFields = document.getElementsByClassName('reqTextField');
-
 for (i = 0; i < reqFields.length; i++) {
 	setupFieldValidation(reqFields[i]);
 }
 
+function setupToolTips(currToolTip) {
+	currToolTip.onmouseover = function() {
+		currToolTip.parentNode.childNodes[7].style.display = 'block';
+	}
+	currToolTip.onmouseout = function() {
+		currToolTip.parentNode.childNodes[7].style.display = 'none';
+	}
+}
+
+var tooltips = document.getElementsByClassName('tooltipIcon'); 
+for (i = 0; i < tooltips.length; i++) {
+	setupToolTips(tooltips[i]);
+}
 
 
 
