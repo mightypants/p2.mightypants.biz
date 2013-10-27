@@ -14,7 +14,6 @@
 <body>	
 
 	<div id="nav">
-
         <a href='/'>Home</a>
 
         <!-- Menu for users who are logged in -->
@@ -36,12 +35,26 @@
 
 	
 	<?php if(isset($content)) echo $content; ?>
-	<?php if(isset($contentLeft)) echo $contentLeft; ?>
-	<?php if(isset($contentRight)) echo $contentRight; ?>
+	<?php if(isset($contentLeft)) echo 
+		"<div id=\"contentLeft\"> 
+			$contentLeft 
+		</div>"; 
+	?>
+	<?php if(isset($contentRight)) echo 
+		"<div id=\"contentRight\"> 
+			$contentRight 
+		</div>
+		<br class=\"clearfloat\" />" ; 
+	?>
+	<?php if(isset($contentLeftBot)) echo 
+		"<div id=\"contentLeftBot\"> 
+			$contentLeftBot 
+		</div>
+		<br class=\"clearfloat\" />" ; 
+	?>
 
 	<?php if(isset($client_files_body)) echo $client_files_body; ?>
 
 	</div>
-	<div id="foot"></div>
 </body>
 </html>

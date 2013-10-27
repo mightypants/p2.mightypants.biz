@@ -18,7 +18,7 @@ class index_controller extends base_controller {
 		// setup if statement, check cookie for login and go to user home
 		if($this->userObj->authenticate()) {
 
-	        Router::redirect("/users/profile");
+	        Router::redirect("/posts/index");
 
 	    # But if we did, login succeeded! 
 	    } else {

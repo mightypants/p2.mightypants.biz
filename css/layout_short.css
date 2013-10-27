@@ -1,18 +1,28 @@
 #wrapper {
-	width: 852px;
+	width: 850px;
 	margin: 0 auto;
 	padding: 20px 10px;
-	background: url("/images/wrapper_bg_mid.png") top center repeat-y;
+	background-color: #fff;
+	border-bottom-left-radius: 25px;
+	border-bottom-right-radius: 25px;
 }
 
 #nav {
-	width: 872px;
+	width: 870px;
 	height: 50px;
 	margin: 150px auto;
 	margin-bottom: 0;
-	background: url("/images/wrapper_bg_top.png") top center no-repeat;
+	background-color: #96C6C8;
+	border-top-left-radius: 25px;
+	border-top-right-radius: 25px;
 	text-align: right;
 }
+
+#nav a {
+	display: inline-block;
+	margin: 18px 15px;
+}
+
 
 #contentLeft {
 	width: 450px;
@@ -26,9 +36,3 @@
 	float: left;
 }
 
-#foot {
-	width: 872px;
-	height: 26px;
-	margin: 0 auto;
-	background: url("/images/wrapper_bg_bot.png") top center no-repeat;
-}

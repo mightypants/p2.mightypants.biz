@@ -1,0 +1,12 @@
+.profilePic {
+    margin: 15px;
+    margin-left: 25px;
+    float: left;
+}
+
+#profileInfo {
+    width: 635px;
+    margin: 15px;
+    margin-left: 50px;
+    float: left;
+}

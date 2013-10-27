@@ -31,40 +31,60 @@ class posts_controller extends base_controller {
     }
 
     public function p_add() {
+        
+        $newPost = $_POST['content'];
+           
+        if(strlen($newPost) > 0) {
+            # Associate this post with this user
+            $_POST['user_id']  = $this->user->user_id;
 
-        # Associate this post with this user
-        $_POST['user_id']  = $this->user->user_id;
+            # Unix timestamp of when this post was created / modified
+            $_POST['created']  = Time::now();
+            $_POST['modified'] = Time::now();
 
-        # Unix timestamp of when this post was created / modified
-        $_POST['created']  = Time::now();
-        $_POST['modified'] = Time::now();
+            # Insert
+            # Note we didn't have to sanitize any of the $_POST data because we're using the insert method which does it for us
+            DB::instance(DB_NAME)->insert('posts', $_POST);
 
-        # Insert
-        # Note we didn't have to sanitize any of the $_POST data because we're using the insert method which does it for us
-        DB::instance(DB_NAME)->insert('posts', $_POST);
-
-        # Quick and dirty feedback
-        echo "Your post has been added. <a href='/posts/add'>Add another</a>";
-
+            Router::redirect("/posts/index/success");
+        }
+        else {
+        Router::redirect("/posts/index/error");
+        }
     }
 
-    public function index() {
+    public function index($message = NULL) {
 
-        # Set up the View
+        # Set up the View, including posts and curr user profile
         $output = $this->template;
-        $output->content = View::instance('v_posts_index');
+        
+        $output->contentLeft = View::instance('v_users_profile_short');
+        #$output->contentLeftBot = View::instance('v_posts_users');
+        $output->contentLeft->email = $this->user->email;
+        $output->contentLeft->user_name = $this->user->user_name;
+        $output->contentLeft->profile_pic = $this->user->profile_pic;        
+        
+        $output->contentRight = View::instance('v_posts_index');
+        
+        if($message == 'error'){
+            $output->contentRight->message = "Your post contains no content.  This confuses us.";
+        }
+        elseif($message == 'success'){
+            $output->contentRight->message = "Post added.";
+        }
+        $output->contentRight->message = $message;
         $output->title   = "Posts";
 
         # Build the query
-        $q = "SELECT * FROM posts p JOIN users u ON p.user_id=u.user_id";
+        $q = "SELECT p.*, u.user_name, u.profile_pic_sm FROM posts p JOIN users u ON p.user_id=u.user_id ORDER BY p.created DESC";
 
         # Run the query
         $posts = DB::instance(DB_NAME)->select_rows($q);
 
         # Pass data to the View
-        $output->content->posts = $posts;
+        $output->contentRight->posts = $posts;
 
-        $client_files_head = Array("/css/post.css","/css/layout_tall.css");
+        $client_files_head = Array("/css/layout_tall.css","/css/form.css","/css/post.css");
         $output->client_files_head = Utils::load_client_files($client_files_head); 
 
         # Render the View
@@ -86,16 +106,12 @@ class posts_controller extends base_controller {
         # Store the result array in the variable $users
         $users = DB::instance(DB_NAME)->select_rows($q);
 
-        # Build the query to figure out what connections does this user already have? 
-        # I.e. who are they following
+        # Build the query to figure out who the current user follows
         $q = "SELECT * 
             FROM users_users
             WHERE user_id = ".$this->user->user_id;
 
-        # Execute this query with the select_array method
-        # select_array will return our results in an array and use the "users_id_followed" field as the index.
-        # This will come in handy when we get to the view
-        # Store our results (an array) in the variable $connections
+        # return users followed
         $connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
 
         # Pass data (users and connections) to the view
@@ -137,3 +153,4 @@ class posts_controller extends base_controller {
 
     }
 }
+

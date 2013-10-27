@@ -5,29 +5,34 @@
 }
 
 body {
-	background-color: #fff;
+	background-color: #ccfafc;
 	font-family: Arial, sans-serif;
 	color: #333;
 }
 
 h1 {}
-h2 {text-align: center; font-size: 1.5em}
+h2 {margin: 0 0 15px 0; font-size: 1.5em}
 h3 {}
 h4 {}
 
 p {
-	margin: 0 0 10px 0;
+	margin: 0 0 15px 0;
+	font-size: 1em;
 }
 
 a:link, a:visited, a:hover, a:active {
 	text-decoration: none;
 	font-size: 1em;
+	color: #417D7F;
+}
+
+a:hover, a:active {
+	color: #ccfafc;
 }
 
 #nav a {
 	display: inline-block;
-	margin: 17px 15px;
-	color: #eee;
+	margin: 18px 15px;
 }
 
 .clearfloat {

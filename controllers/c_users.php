@@ -98,7 +98,7 @@ class users_controller extends base_controller {
             Router::redirect("/users/login/error");             
         } else {
             setcookie("token", $token, strtotime('+1 year'), '/');
-            Router::redirect("/users/profile");
+            Router::redirect("/posts/index");
         }
 
 }
@@ -126,18 +126,25 @@ class users_controller extends base_controller {
         $output->title = "Profile";
         $output->content = View::instance('v_users_profile');        
 
+        #use user name from URL param if present, otherwise use info for currently logged in user
         if($user_name) {
             $output->content->user_name = $user_name;    
         }
         elseif ($this->user) {
-            $output->content->user_name = $this->user->user_name;
+            $currUser = $this->user;
+            $output->content->user = $currUser;
+            $output->content->user_name = $currUser->user_name;
+            $output->content->email = $currUser->email;
+            $output->content->first_name = $currUser->first_name;
+            $output->content->profile_pic = $currUser->profile_pic;
+            $output->content->last_name = $currUser->last_name;
         }
         else {
             $output->content->user_name = NULL;
         }
 
         # Set client files within the header and body
-        $client_files_head = Array("/css/form.css","/css/layout_tall.css");
+        $client_files_head = Array("/css/form.css","/css/layout_tall.css","/css/profile.css");
         $output->client_files_head = Utils::load_client_files($client_files_head);  
         $client_files_body = Array("/js/profile.min.js");
         $output->client_files_body = Utils::load_client_files($client_files_body);

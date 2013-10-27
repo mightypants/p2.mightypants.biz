@@ -61,15 +61,21 @@ function validateForm(currField) {
 		}
 	}
 	else if (currField.getAttribute('id') == 'first_name') {
-		if(!validateLength(currField, 1, 25)) { 
+		if(!validateLength(currField, 0, 25)) { 
 			validField = false;
 		}
 	}
 	else if (currField.getAttribute('id') == 'last_name') {
-		if(!validateLength(currField, 1, 25)) { 
+		if(!validateLength(currField, 0, 25)) { 
 			validField = false;
 		}
 	}
+	else if (currField.getAttribute('id') == 'content') {
+		if(!validateLength(currField, 0, 25)) { 
+			validField = false;
+		}
+	}
+
 	//check for valid password, 6 or more characters
 	else if (currField.getAttribute('id') == 'password') {
 		var pwLengthResult = validateLength(currField, 5, 16);

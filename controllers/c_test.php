@@ -3,14 +3,13 @@
 	
 	public function test1() {
 		
-		# Our SQL command
-		$q = "INSERT INTO users SET 
-	    first_name = 'Jonnie', 
-	    last_name = 'Dredge',
-	    email = 'mrmightypants@gmail.com'";
+		$errors = array(
+			1 => 'bad',
+			2 => 'you messed up',
+			3 => 'frown');
 
-		# Run the command
-		echo DB::instance(DB_NAME)->query($q);
+		$this->template->content = View::instance('v_test');
+		$this->template->content->err = $errors;
 	}
 }
 
