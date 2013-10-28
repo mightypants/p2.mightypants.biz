@@ -44,7 +44,7 @@
 		"<div id=\"contentRight\"> 
 			$contentRight 
 		</div>
-		<br class=\"clearfloat\" />" ; 
+		" ; 
 	?>
 	<?php if(isset($contentLeftBot)) echo 
 		"<div id=\"contentLeftBot\"> 
@@ -52,7 +52,7 @@
 		</div>
 		<br class=\"clearfloat\" />" ; 
 	?>
-
+	<br class="clearfloat" />
 	<?php if(isset($client_files_body)) echo $client_files_body; ?>
 
 	</div>

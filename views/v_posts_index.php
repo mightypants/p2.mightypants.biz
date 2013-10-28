@@ -16,18 +16,24 @@
     <br class="clearfloat">
 </form> 
 
-<?php foreach($posts as $post): ?>
 
-	<article>
-	    <img class="profilePicSmall" src="<?=$post['profile_pic_sm']?>" />
+<?php if(isset($posts)): ?> 
+	<?php foreach($posts as $post): ?>
 
-	    <div class="postRight">
-		    <time datetime="<?=Time::display($post['created'],'Y-m-d G:i')?>">
-		        <?=Time::display($post['created'])?>
-		    </time>
-		    <h4><?=$post['user_name']?></h4>
-		    <p><?=$post['content']?></p>
-	    </div>
-	    <br class="clearfloat">
-    </article>
-<?php endforeach; ?>
+		<article>
+		    <img class="profilePicSmall" src="<?=$post['profile_pic_sm']?>" />
+
+		    <div class="postRight">
+			    <time datetime="<?=Time::display($post['created'],'Y-m-d G:i')?>">
+			        <?=Time::display($post['created'])?>
+			    </time>
+			    <h4><?=$post['user_name']?></h4>
+			    <p><?=$post['content']?></p>
+		    </div>
+		    <br class="clearfloat">
+	    </article>
+	<?php endforeach; ?>
+
+<?php else: ?>
+	<p>There is no content to view at this time.</p>         
+<?php endif; ?>  

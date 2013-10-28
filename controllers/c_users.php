@@ -57,17 +57,17 @@ class users_controller extends base_controller {
             # Insert this user into the database
             $user_id = DB::instance(DB_NAME)->insert('users', $_POST); 
 
-            Router::redirect("/users/login/");
+            Router::redirect("/users/login/success");
         }
     }
 
-    public function login($error = NULL) {
+    public function login($message = NULL) {
         # Setup view
         $output = $this->template;
         $output->title = "Login";
         $output->contentLeft = View::instance('v_index_index');
         $output->contentRight = View::instance('v_users_login');
-        $output->contentRight->error = $error;
+        $output->contentRight->message = $message;
 
         # Set client files within the header and body
         $client_files_head = Array("/css/form.css","/css/layout_short.css");
@@ -150,6 +150,18 @@ class users_controller extends base_controller {
         $output->client_files_body = Utils::load_client_files($client_files_body);
 
         echo $output;
+
+    }
+
+    public function profile_short() {
+
+        $output = $this->template;
+        $output->contentLeft = View::instance('v_users_profile_short');        
+
+        $output->contentLeft->user_name = $this->user->user_name;
+        $output->contentLeft->profile_pic = $this->user->profile_pic;
+
+        return $output->contentLeft;
 
     }
 

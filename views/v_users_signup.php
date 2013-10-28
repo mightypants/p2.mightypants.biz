@@ -4,7 +4,7 @@
         <p class="fieldName">Username:</p>
         <input class="reqTextField" name='user_name' id="user_name" type='text' value="" />
         <img class="tooltipIcon" src="/images/tooltip.png">
-        <p id="usrReqs" class="tooltip">6 to 15 characters; only letters and numbers.</p>
+        <p id="usrReqs" class="tooltip">Usernames must be 6 to 15 characters long, and may contain only letters and numbers.</p>
         <br class="clearfloat">
     </div>
     <div class="reqField">
@@ -35,6 +35,6 @@
 </form>
 <p class='error'>
     <?php if(isset($error)): ?> 
-        Login failed. Please double check your email and password.
+        There were errors with your entries.  Perhaps you misspelled your human name.
     <?php endif; ?>  
 </p> 

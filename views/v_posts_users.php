@@ -1,19 +1,18 @@
+<div id="userList"><h2>Users</h2>
 <? foreach($users as $user): ?>
 
-    <!--if($user == $this->user)-->
-
     <!-- Print this user's name -->
-    <?=$user['user_name']?>
+    <p class="userLink"><?=$user['user_name']?><br />
 
     <!-- If there exists a connection with this user, show a unfollow link -->
     <? if(isset($connections[$user['user_id']])): ?>
-        <a href='/posts/unfollow/<?=$user['user_id']?>'>Unfollow</a>
+        <a class="follow" href='/posts/unfollow/<?=$user['user_id']?>'>Unfollow</a>
 
     <!-- Otherwise, show the follow link -->
     <? else: ?>
-        <a href='/posts/follow/<?=$user['user_id']?>'>Follow</a>
+        <a class="follow" href='/posts/follow/<?=$user['user_id']?>'>Follow</a>
     <? endif; ?>
-
-    <br><br>
+    </p>
 
 <? endforeach; ?>
+</div>

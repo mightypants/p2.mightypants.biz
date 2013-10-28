@@ -25,12 +25,18 @@
 
 #contentLeft {
 	width: 280px;
-	margin-top: 10px;
+	margin: 10px 0 20px 20px;
+	float: left;
+}
+
+#contentLeftBot {
+	width: 280px;
+	margin: 10px 0 20px 20px;
 	float: left;
 }
 
 #contentRight {
 	width: 650px;
 	margin-top: 10px;
-	float: left;
+	float: right;
 }

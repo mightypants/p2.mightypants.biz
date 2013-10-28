@@ -8,12 +8,6 @@
 
 }
 
-.profilePic {
-    margin-left: 20px;
-}
-
-h2 {margin: 20px 0 10px 20px;}
-
 form {
     margin: 20px 0;
 }
@@ -80,4 +74,33 @@ time {
     font-size: .7em;
     float: right;
 }
+
+#userList {
+    width: 186px;
+    padding: 15px 10px;
+    background-color: #e6f6f8;
+    border-radius: 12px;
+
+}
+
+#userList h2 {margin: 0 3px 10px 3px; border-bottom: 1px solid #96C6C8;}
+
+
+.userLink {
+    margin-left: 3px;
+    font-weight: bold;
+}
+
+.userLink a {
+    font-weight: normal;
+}
+
+.follow:link, .follow:hover, .follow:visited, .follow:active {
+    font-size: .8em;
+}
+
+.profilePic {
+    margin: 0 3px;
+}
+
 

@@ -1,4 +1,13 @@
-<p>Please login with your username and password below.  If you don't have an account, <a href="/users/signup">sign up here</a>.</p>
+<?php 
+    if(isset($message)) {
+        if($message == 'success') {
+            echo "<p class=\"success\">Your account has been created successfully, please log in below.</p>";
+        }    
+    }
+    else {
+            echo "<p>Please login with your username and password below.  If you don't have an account, <a href=\"/users/signup\">sign up here</a>.</p>";
+    }
+?> 
 
 <form id="contactFrm" method="POST" action="/users/p_login">
     <div class="reqField">

@@ -58,11 +58,15 @@ class posts_controller extends base_controller {
         # Set up the View, including posts and curr user profile
         $output = $this->template;
         
-        $output->contentLeft = View::instance('v_users_profile_short');
-        #$output->contentLeftBot = View::instance('v_posts_users');
-        $output->contentLeft->email = $this->user->email;
-        $output->contentLeft->user_name = $this->user->user_name;
-        $output->contentLeft->profile_pic = $this->user->profile_pic;        
+        $profile = new users_controller();
+        $output->contentLeft = $profile->profile_short();
+        
+        #$output->contentLeft = View::instance('v_users_profile_short');
+        #$output->contentLeft->email = $this->user->email;
+        #$output->contentLeft->user_name = $this->user->user_name;
+        #$output->contentLeft->profile_pic = $this->user->profile_pic;  
+
+        $output->contentLeftBot = $this->users();      
         
         $output->contentRight = View::instance('v_posts_index');
         
@@ -76,8 +80,20 @@ class posts_controller extends base_controller {
         $output->title   = "Posts";
 
         # Build the query
-        $q = "SELECT p.*, u.user_name, u.profile_pic_sm FROM posts p JOIN users u ON p.user_id=u.user_id ORDER BY p.created DESC";
-
+        $q = 'SELECT
+                p.content,
+                p.created,
+                p.user_id,
+                uu.user_id,
+                u.user_name,
+                u.profile_pic_sm
+              FROM posts p
+              INNER JOIN users_users uu
+              ON p.user_id = uu.user_id_followed
+              INNER JOIN users u
+              ON p.user_id = u.user_id
+              WHERE uu.user_id = '.$this->user->user_id . ' 
+              ORDER BY p.created DESC' ;
         # Run the query
         $posts = DB::instance(DB_NAME)->select_rows($q);
 
@@ -93,10 +109,9 @@ class posts_controller extends base_controller {
     }
 
     public function users() {
-
         $output = $this->template;
-        $output->content = View::instance("v_posts_users");
-        $output->title   = "Users";
+        $this->template->contentLeftBot = View::instance("v_posts_users");
+        #$output->title   = "Users";
 
         # Build the query to get all the users
         $q = "SELECT *
@@ -115,14 +130,11 @@ class posts_controller extends base_controller {
         $connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
 
         # Pass data (users and connections) to the view
-        $output->content->users       = $users;
-        $output->content->connections = $connections;
-
-        $client_files_head = Array("/css/post.css","/css/layout_tall.css");
-        $output->client_files_head = Utils::load_client_files($client_files_head); 
+        $output->contentLeftBot->users       = $users;
+        $output->contentLeftBot->connections = $connections;
 
         # Render the view
-        echo $output;
+        return $output->contentLeftBot;
     }
 
     public function follow($user_id_followed) {
@@ -138,7 +150,7 @@ class posts_controller extends base_controller {
         DB::instance(DB_NAME)->insert('users_users', $data);
 
         # Send them back
-        Router::redirect("/posts/users");
+        Router::redirect("/posts/index");
 
     }
 
@@ -149,7 +161,7 @@ class posts_controller extends base_controller {
         DB::instance(DB_NAME)->delete('users_users', $where_condition);
 
         # Send them back
-        Router::redirect("/posts/users");
+        Router::redirect("/posts/index");
 
     }
 }
