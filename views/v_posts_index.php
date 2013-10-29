@@ -1,11 +1,11 @@
 <form method='POST' action='/posts/p_add'>
-    <textarea name='content' id='content' class="reqTextField">Add something...</textarea>
+    <textarea name='content' id='content' class="reqTextField"></textarea>
     <input type='submit' class="submitBtn" value='New post'>
     
     <?php 
     	if(isset($message)) {
     		if($message == 'error') {
-    			echo "<p class=\"error\">Your post contains no content.  This confuses us.</p>";
+    			echo "<p class=\"error\">Your post has no content.  This confuses us.</p>";
     		}
     		else {
     			echo "<p class=\"success\">Your post has been added.  Congratulations.</p>";
@@ -16,7 +16,7 @@
     <br class="clearfloat">
 </form> 
 
-
+<div id="postWrapper">
 <?php if(isset($posts)): ?> 
 	<?php foreach($posts as $post): ?>
 
@@ -37,3 +37,4 @@
 <?php else: ?>
 	<p>There is no content to view at this time.</p>         
 <?php endif; ?>  
+</div>
