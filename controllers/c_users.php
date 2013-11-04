@@ -91,6 +91,11 @@ class users_controller extends base_controller {
 
         $token = DB::instance(DB_NAME)->select_field($q);
 
+        # force user to follow self on first login
+        #$newFollow = new posts_controller();
+        #$newFollow->follow_self();
+    
+
         #redirect with error if token failed, otherwise redirect to user profile
         if(!$token) {
             Router::redirect("/users/login/error");             

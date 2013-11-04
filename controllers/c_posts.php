@@ -61,6 +61,8 @@ class posts_controller extends base_controller {
         $output->contentLeft = $profile->profile_short();        
         $output->contentLeftBot = $this->users();       
         $output->contentRight = View::instance('v_posts_index');
+        $output->contentRight->currUserID = $this->user->user_id;
+
         
         $output->contentRight->message = $message;
         $output->title   = $this->user->user_name . " - Dashboard";
@@ -70,7 +72,7 @@ class posts_controller extends base_controller {
                 p.content,
                 p.created,
                 p.user_id,
-                uu.user_id,
+                p.post_id,
                 u.user_name,
                 u.profile_pic_sm
               FROM posts p
@@ -117,6 +119,7 @@ class posts_controller extends base_controller {
 
         # Pass data (users and connections) to the view
         $output->contentLeftBot->users       = $users;
+        $output->contentLeftBot->currUserID    = $this->user->user_id;
         $output->contentLeftBot->connections = $connections;
 
         # Render the view
@@ -147,6 +150,37 @@ class posts_controller extends base_controller {
         DB::instance(DB_NAME)->delete('users_users', $where_condition);
 
         # Send them back
+        Router::redirect("/posts/index");
+
+    }
+
+    public function follow_self() {
+        $currUserID = $this->user->user_id;
+        
+        $q = "SELECT *
+              FROM users_users 
+              WHERE user_id = '$currUserID' 
+              AND user_id = '$currUserID' ";
+        # Run the query
+
+        $posts = DB::instance(DB_NAME)->select_rows($q);
+
+        if (empty($posts)) {
+            $data = Array(
+            "created" => Time::now(),
+            "user_id" => $this->user->user_id,
+            "user_id_followed" => $this->user->user_id   
+            );
+
+            # Do the insert
+            DB::instance(DB_NAME)->insert('users_users', $data);
+        }
+
+    }
+
+    public function delete($post_id) {
+        $where_condition = "WHERE post_id = '$post_id' ";
+        DB::instance(DB_NAME)->delete('posts', $where_condition);
         Router::redirect("/posts/index");
 
     }

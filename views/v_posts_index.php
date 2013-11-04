@@ -17,9 +17,8 @@
 </form> 
 
 <div id="postWrapper">
-<?php if(isset($posts)): ?> 
-	<?php foreach($posts as $post): ?>
-
+<?php if(!empty($posts)): ?> 
+	<?php foreach($posts as $post): ?>	
 		<article>
 		    <img class="profilePicSmall" src="<?=$post['profile_pic_sm']?>" />
 
@@ -29,12 +28,16 @@
 			    </time>
 			    <h4><?=$post['user_name']?></h4>
 			    <p><?=$post['content']?></p>
+			    <? if ($post['user_id'] == $currUserID): ?>
+			    	<a href="/posts/delete/<?=$post['post_id']?>" class="delPost">Delete post</a></p>
+				<? endif ; ?>
 		    </div>
 		    <br class="clearfloat">
 	    </article>
 	<?php endforeach; ?>
 
 <?php else: ?>
-	<p>There is no content to view at this time.</p>         
+	<p>There is no content to view at this time.  Try following some other users or adding your own posts.</p>         
 <?php endif; ?>  
 </div>
+

@@ -78,6 +78,13 @@ time {
     float: right;
 }
 
+.delPost:link, .delPost:visited, .delPost:hover, .delPost:active {
+    display: block;
+    margin: 0;
+    float: right;
+    font-size: .9em;
+}
+
 #userList {
     width: 186px;
     padding: 15px 10px;
