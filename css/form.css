@@ -13,8 +13,15 @@
     width: 230px;
     margin: 10px 5px;
     padding: 6px;
+    resize: none;
     border: 2px solid #A5CACC;
     font-size: .9em;
+}
+
+.textBox {
+    width: 400px;
+    height: 150px;
+    vertical-align: top;
 }
 
 .invalidWarning {
@@ -39,10 +46,26 @@
 }
 
 .error {
+    color: #f01010;
+}
+
+.errorBottom {
     height: 20px;
-    margin-top: 15px;
+    margin: 0 10px 15px 0;
     font-size: .9em;
     color: #f01010;
+}
+
+.success {
+    color: #10f010;
+}
+
+.successBottom {
+    height: 20px;
+    margin: 0 10px 15px 0;
+    font-size: .9em;
+    color: #10f010;
+    float: left;
 }
 
 .tooltipIcon {
@@ -54,16 +77,8 @@
 
 .tooltip {
     display: none;
-    width: 260px;
     margin: 0px 0px 0px 108px;
     font-size: .8em;
     color: #f01010;
 }
 
-.success {
-    height: 20px;
-    margin: 0 10px 15px 0;
-    font-size: 1em;
-    color: #10f010;
-    float: left;
-}

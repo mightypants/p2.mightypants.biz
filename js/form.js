@@ -14,6 +14,11 @@ function validateAlphaNum(field) {
 	return !regexAlphaNum.test(field.value);
 }
 
+function validateNumOnly(field) {
+	var regexNum = /.*[^0-9].*/;
+	return !regexNum.test(field.value);
+}
+
 function validatePWChars(field) {
 	var regexNum = /[0-9]/;
 	var regexAlpha = /[A-Za-z]/;
@@ -42,17 +47,16 @@ function clearWarnings(field){
 	}
 }
 
+//check the form field based on type of field
 function validateForm(currField) {
 	var validField = true;
 
-	//check for valid e-mail address
 	if (currField.getAttribute('id') == 'email') {
 		var emailResult = validateEmailFormat(currField);
 		if(!emailResult ){ 
 			validField = false;
 		}
 	}
-	//check for valid username
 	else if (currField.getAttribute('id') == 'user_name') {
 		var userLengthResult = validateLength(currField, 5, 16);
 		var userAlphaNumResult = validateAlphaNum(currField);
@@ -75,8 +79,21 @@ function validateForm(currField) {
 			validField = false;
 		}
 	}
-
-	//check for valid password, 6 or more characters
+	else if (currField.getAttribute('id') == 'about') {
+		if(!validateLength(currField, 0, 900)) { 
+			validField = false;
+		}
+	}
+	else if (currField.getAttribute('id') == 'age') {
+		if(!validateLength(currField, 0, 4) || !validateNumOnly(currField)) { 
+			validField = false;
+		}
+	}
+	else if (currField.getAttribute('id') == 'hometown') {
+		if(!validateLength(currField, 1, 25)) { 
+			validField = false;
+		}
+	}
 	else if (currField.getAttribute('id') == 'password') {
 		var pwLengthResult = validateLength(currField, 5, 16);
 		var pwCharsResult = validatePWChars(currField);

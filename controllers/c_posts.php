@@ -5,9 +5,8 @@ class posts_controller extends base_controller {
     public function __construct() {
         parent::__construct();
 
-        # Make sure user is logged in if they want to use anything in this controller
         if(!$this->user) {
-            die("Members only. <a href='/users/login'>Login</a>");
+            Router::redirect('/users/login');
         }
     }
 
@@ -57,27 +56,14 @@ class posts_controller extends base_controller {
 
         # Set up the View, including posts and curr user profile
         $output = $this->template;
-        
+        #call profile_short method to return basic user info to go in dashboard page
         $profile = new users_controller();
-        $output->contentLeft = $profile->profile_short();
-        
-        #$output->contentLeft = View::instance('v_users_profile_short');
-        #$output->contentLeft->email = $this->user->email;
-        #$output->contentLeft->user_name = $this->user->user_name;
-        #$output->contentLeft->profile_pic = $this->user->profile_pic;  
-
-        $output->contentLeftBot = $this->users();      
-        
+        $output->contentLeft = $profile->profile_short();        
+        $output->contentLeftBot = $this->users();       
         $output->contentRight = View::instance('v_posts_index');
         
-        if($message == 'error'){
-            $output->contentRight->message = "Your post contains no content.  This confuses us.";
-        }
-        elseif($message == 'success'){
-            $output->contentRight->message = "Post added.";
-        }
         $output->contentRight->message = $message;
-        $output->title   = "Posts";
+        $output->title   = $this->user->user_name . " - Dashboard";
 
         # Build the query
         $q = 'SELECT

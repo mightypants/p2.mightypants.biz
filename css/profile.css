@@ -5,8 +5,62 @@
 }
 
 #profileInfo {
-    width: 635px;
+    width: 645px;
     margin: 15px;
     margin-left: 50px;
     float: left;
+}
+
+.profileLeft {
+    width: 50%;
+    float: left;
+}
+
+.profileRight {
+    width: 50%;
+    float: right;
+}
+
+.fieldName {
+    margin: 10px 15px 10px 0px;
+    width: 85px;
+    font-size: 1em;
+    text-align: left;
+}
+
+.reqTextField {
+    width: 450px;
+    margin: 10px 5px;
+    padding: 6px;
+    resize: none;
+    border: 2px solid #A5CACC;
+    font-size: .9em;
+}
+
+.textBox {
+    width: 450px;
+    height: 150px;
+    vertical-align: top;
+}
+
+.submitBtn {
+    margin: 10px 5px 5px 440px;
+    padding: 5px 12px;
+    background-color: #5666C8;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #fff;
+}
+
+.submitBtn:hover {
+    background-color: #5666C8;
+    color: #ccfafc; 
+    cursor:pointer;
+}
+
+a.submitBtn {
+    display: inline-block;
+    color: #fff;
+    margin: 10px 0;
 }
