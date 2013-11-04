@@ -72,8 +72,6 @@ class users_controller extends base_controller {
         # Set client files within the header and body
         $client_files_head = Array("/css/form.css","/css/layout_short.css");
         $output->client_files_head = Utils::load_client_files($client_files_head);  
-        $client_files_body = Array("/js/form.js");
-        $output->client_files_body = Utils::load_client_files($client_files_body);
 
         echo $output;
     }
@@ -123,7 +121,7 @@ class users_controller extends base_controller {
         }
 
         $output = $this->template;
-        $output->title = "Profile";
+        $output->title = $this->user->user_name. " - Profile";
         $output->content = View::instance('v_users_profile');        
 
         #use user name from URL param if present, otherwise use info for currently logged in user
@@ -138,6 +136,9 @@ class users_controller extends base_controller {
             $output->content->first_name = $currUser->first_name;
             $output->content->profile_pic = $currUser->profile_pic;
             $output->content->last_name = $currUser->last_name;
+            $output->content->hometown = $currUser->hometown;
+            $output->content->age = $currUser->age;
+            $output->content->about = $currUser->about;
         }
         else {
             $output->content->user_name = NULL;
@@ -153,6 +154,62 @@ class users_controller extends base_controller {
 
     }
 
+    public function edit_profile($error=NULL) {
+
+        if(!$this->user) {
+            Router::redirect('/users/login');
+        }
+
+        $output = $this->template;
+        $output->title = $this->user->user_name. " - Profile";
+        $output->content = View::instance('v_users_edit_profile');        
+
+        $currUser = $this->user;
+        $output->content->user = $currUser;
+        $output->content->profile_pic = $currUser->profile_pic;
+        $output->content->user_name = $currUser->user_name;
+        $output->content->email = $currUser->email;
+        $output->content->first_name = $currUser->first_name;
+        $output->content->profile_pic = $currUser->profile_pic;
+        $output->content->last_name = $currUser->last_name;
+        $output->content->hometown = $currUser->hometown;
+        $output->content->age = $currUser->age;
+        $output->content->about = $currUser->about;
+        $output->content->error = $error;
+
+        # Set client files within the header and body
+        $client_files_head = Array("/css/layout_tall.css","/css/form.css","/css/profile.css");
+        $output->client_files_head = Utils::load_client_files($client_files_head);  
+        $client_files_body = Array("/js/form.js");
+        $output->client_files_body = Utils::load_client_files($client_files_body);
+
+        echo $output;   
+    }
+
+    public function p_edit_profile() {
+
+        $validForm;
+
+        foreach($_POST as $k=>$v) {
+            if(!$this->validateFields($k, $v)){
+                $validForm = false;
+            }
+            else {
+                $validForm = true;
+            }
+        }
+
+
+        if(!$validForm) {
+            Router::redirect('/users/edit_profile/error');
+        }
+        else {
+            DB::instance(DB_NAME)->update("users", $_POST, "WHERE user_id = '".$this->user->user_id."'");
+            Router::redirect("/users/profile");
+        }
+
+    }
+
     public function profile_short() {
 
         $output = $this->template;
@@ -165,11 +222,11 @@ class users_controller extends base_controller {
 
     }
 
-    public function validateLength($fieldValue, $max, $min) {
-        return strlen($fieldValue) > 5 && strlen($fieldValue) < 16;
+    public function validateLength($fieldValue, $min, $max) {
+        return strlen($fieldValue) > $min && strlen($fieldValue) < $max;
     }
 
-    public function validateEmailFormat($fieldValue) {
+    public function validateEmailFormat($fieldValue) { 
         return preg_match('/.+@.+\..{2,}/', $fieldValue);
     }
 
@@ -181,20 +238,33 @@ class users_controller extends base_controller {
         return preg_match('/[0-9]/', $fieldValue) && preg_match('/[A-Za-z]/', $fieldValue);
     }
 
+    public function validateNumOnly($fieldValue) {
+        return !preg_match('/.*[^0-9].*/', $fieldValue);
+    }
 
     public function validateFields($field,$value) {
         if($field == 'user_name') {
             return  $this->validateLength($value, 5, 16) && 
                     $this->validateAlphaNum($value);
         }
-        elseif($field == 'email') {
+        if($field == 'email') {
             return  $this->validateEmailFormat($value);     
         }
         elseif($field == 'first_name') {
-            return  $this->validateLength($value, 1, 25);     
+            return  $this->validateLength($value, 0, 25);     
         }
         elseif($field == 'last_name') {
+            return  $this->validateLength($value, 0, 25);     
+        }
+        elseif($field == 'age') {
+            return  $this->validateLength($value, 0, 4); //&&
+                    //$this->validateNumOnly($value);     
+        }
+        elseif($field == 'hometown') {
             return  $this->validateLength($value, 1, 25);     
+        }
+        elseif($field == 'about') {
+            return  $this->validateLength($value, 0, 900);     
         }
         elseif($field == 'password') {
             return  $this->validateLength($value, 5, 16) &&
@@ -202,7 +272,7 @@ class users_controller extends base_controller {
                     $this->validateAlphaNum($value); 
         }
         else {
-            return false;
+            return true;
         }
     }
 
