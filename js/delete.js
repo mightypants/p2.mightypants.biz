@@ -1,13 +1,17 @@
-	function deleteWarning(post) {
-		var proceed = confirm("Are you sure you want to delete this post?");
-		if(!proceed) {
-			return false;
-		}
+	function deleteWarning() {
+		return confirm("Are you sure you want to delete this post?");
 	}
 
 	function setupDeleteWarning(post) {
 		post.onclick = function() {
-			deleteWarning(post);
+			var confirmDelete = deleteWarning();
+
+			if (!confirmDelete) {
+				return false;
+			}
+			else {
+				return true;
+			}
 		}
 	}
 
@@ -16,4 +20,3 @@
 	for (i = 0; i < deletablePosts.length; i++) {
 		setupDeleteWarning(deletablePosts[i]);
 	}
-	
