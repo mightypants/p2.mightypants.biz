@@ -1,10 +1,7 @@
 	function deleteWarning(post) {
-		var proceed = confirm("y'all tryin to delete me?");
+		var proceed = confirm("Are you sure you want to delete this post?");
 		if(!proceed) {
 			return false;
-		}
-		else {
-			console.log('go ahead');
 		}
 	}
 
@@ -14,10 +11,9 @@
 		}
 	}
 
-
 	var deletablePosts = document.getElementsByClassName('delPost');
-
 
 	for (i = 0; i < deletablePosts.length; i++) {
 		setupDeleteWarning(deletablePosts[i]);
 	}
+	
