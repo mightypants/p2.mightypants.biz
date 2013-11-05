@@ -26,6 +26,6 @@
         <input class="reqTextField" name='password' id="password" type='password' value="" size='25' />
         <br class="clearfloat">
     </div>
-    <input type='submit' class="submitBtn" id="frmSubmit" value='Login' size='15' />   
+    <input type='submit' class="submitBtn" id="frmSubmit" value='Login' />   
 </form>
 

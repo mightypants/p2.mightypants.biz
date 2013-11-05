@@ -43,5 +43,5 @@
         <p id="pwReqs" class="tooltip">6 to 15 characters long; least one number and one letter</p>
         <br class="clearfloat">
     </div>
-    <input type='submit' class="submitBtn" id="frmSubmit" value='Sign Up' size='15' />   
+    <input type='submit' class="submitBtn" id="frmSubmit" value='Sign Up' />   
 </form>

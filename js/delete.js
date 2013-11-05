@@ -1,7 +1,10 @@
 	function deleteWarning(post) {
 		var proceed = confirm("y'all tryin to delete me?");
 		if(!proceed) {
-			console.log('canceled');
+			return false;
+		}
+		else {
+			console.log('go ahead');
 		}
 	}
 

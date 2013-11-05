@@ -49,7 +49,7 @@
 			<img class="tooltipIcon" src="/images/tooltip.png">
         	<p id="aboutReqs" class="tooltip">Field cannot be left blank.  Max characters is 900.</p>
 		</div>
-		<input type='submit' class="submitBtn" id="frmSubmit" value='Save Changes' size='15' />   
+		<input type='submit' class="submitBtn" id="frmSubmit" value='Save Changes' />   
 	</form>
 </div>
 

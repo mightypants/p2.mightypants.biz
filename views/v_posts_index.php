@@ -1,7 +1,7 @@
 <form method='POST' action='/posts/p_add'>
     <textarea name='content' id='content' class="reqTextField"></textarea>
     <input type='submit' class="submitBtn" value='New post'>
-    
+
     <?php 
     	if(isset($message)) {
     		if($message == 'error') {
@@ -26,7 +26,7 @@
 			    <time datetime="<?=Time::display($post['created'],'Y-m-d G:i')?>">
 			        <?=Time::display($post['created'])?>
 			    </time>
-			    <h4><?=$post['user_name']?></h4>
+			    <a class="userLink" href='/users/profile/<?=$post['user_name']?>'><?=$post['user_name']?></a>
 			    <p><?=$post['content']?></p>
 			    <? if ($post['user_id'] == $currUserID): ?>
 			    	<a href="/posts/delete/<?=$post['post_id']?>" class="delPost">Delete post</a></p>
