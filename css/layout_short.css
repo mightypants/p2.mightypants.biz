@@ -12,7 +12,8 @@
 	height: 50px;
 	margin: 150px auto;
 	margin-bottom: 0;
-	background-color: #96C6C8;
+	background-color: #193441;
+	border-bottom: 5px solid #417D7F;
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
 	text-align: right;
@@ -36,3 +37,17 @@
 	float: left;
 }
 
+.welcome {
+	margin: 0 15px;
+	text-align: center;
+}
+
+#welcomeBot {
+	display: block;
+	margin: 25px 10px 0 70px;
+}
+
+#plusOne {
+	margin: 10px 10px -8px 10px;
+	font-size: .8em;
+}

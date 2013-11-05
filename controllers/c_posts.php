@@ -17,13 +17,6 @@ class posts_controller extends base_controller {
         $output->content = View::instance('v_posts_add');
         $output->title   = "New Post";
 
-        $client_files_head = Array("/css/form.css","/css/layout_tall.css");
-        $output->client_files_head = Utils::load_client_files($client_files_head);  
-
-        # Set client files that need to load before the closing </body> tag
-        $client_files_body = Array("/js/form.js");
-        $output->client_files_body = Utils::load_client_files($client_files_body);
-
         # Render template
         echo $output;
 
@@ -54,6 +47,7 @@ class posts_controller extends base_controller {
 
     public function index($message = NULL) {
 
+        $this->follow_self();
         # Set up the View, including posts and curr user profile
         $output = $this->template;
         #call profile_short method to return basic user info to go in dashboard page
@@ -90,6 +84,9 @@ class posts_controller extends base_controller {
 
         $client_files_head = Array("/css/layout_tall.css","/css/form.css","/css/post.css");
         $output->client_files_head = Utils::load_client_files($client_files_head); 
+
+        $client_files_body = Array("/js/delete.js");
+        $output->client_files_body = Utils::load_client_files($client_files_body);
 
         # Render the View
         echo $output;
@@ -163,9 +160,9 @@ class posts_controller extends base_controller {
               AND user_id = '$currUserID' ";
         # Run the query
 
-        $posts = DB::instance(DB_NAME)->select_rows($q);
+        $connection = DB::instance(DB_NAME)->select_rows($q);
 
-        if (empty($posts)) {
+        if (empty($connection)) {
             $data = Array(
             "created" => Time::now(),
             "user_id" => $this->user->user_id,

@@ -12,15 +12,14 @@
 	height: 60px;
 	margin: 0 auto;
 	margin-bottom: 0;
-	background-color: #96C6C8;
-	border-top-left-radius: 20px;
-	border-top-right-radius: 20px;
+	background-color: #193441;
+	border-bottom: 5px solid #417D7F;
 	text-align: right;
 }
 
 #nav a {
 	display: inline-block;
-	margin: 20px 15px;
+	margin: 23px 15px;
 }
 
 #contentLeft {

@@ -34,7 +34,7 @@ class index_controller extends base_controller {
 
     	}
 		
-		$output->title = "Hello World";
+		$output->title = "Very Enjoyable Social Media Website";
 
 
 	      					     		

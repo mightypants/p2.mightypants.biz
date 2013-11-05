@@ -91,11 +91,6 @@ class users_controller extends base_controller {
 
         $token = DB::instance(DB_NAME)->select_field($q);
 
-        # force user to follow self on first login
-        #$newFollow = new posts_controller();
-        #$newFollow->follow_self();
-    
-
         #redirect with error if token failed, otherwise redirect to user profile
         if(!$token) {
             Router::redirect("/users/login/error");             
@@ -131,7 +126,22 @@ class users_controller extends base_controller {
 
         #use user name from URL param if present, otherwise use info for currently logged in user
         if($user_name) {
-            $output->content->user_name = $user_name;    
+            $output->content->user_name = $user_name;  
+            $q = "SELECT *
+              FROM users
+              WHERE user_name = '$user_name' ";
+            # Run the query
+            $user_info = DB::instance(DB_NAME)->select_rows($q); 
+
+            $output->content->user_name = $user_name;
+            $output->content->email = $user_info[0]['email'];
+            $output->content->first_name = $user_info[0]['first_name'];
+            $output->content->profile_pic = $user_info[0]['profile_pic'];
+            $output->content->last_name = $user_info[0]['last_name'];
+            $output->content->hometown = $user_info[0]['hometown'];
+            $output->content->age = $user_info[0]['age'];
+            $output->content->about = $user_info[0]['about'];
+ 
         }
         elseif ($this->user) {
             $currUser = $this->user;
@@ -144,6 +154,7 @@ class users_controller extends base_controller {
             $output->content->hometown = $currUser->hometown;
             $output->content->age = $currUser->age;
             $output->content->about = $currUser->about;
+            $output->content->loggedInUser = true;
         }
         else {
             $output->content->user_name = NULL;
@@ -203,7 +214,6 @@ class users_controller extends base_controller {
                 $validForm = true;
             }
         }
-
 
         if(!$validForm) {
             Router::redirect('/users/edit_profile/error');

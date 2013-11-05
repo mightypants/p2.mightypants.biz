@@ -32,7 +32,7 @@
 .submitBtn {
     margin: 10px 5px 5px 265px;
     padding: 5px 12px;
-    background-color: #5666C8;
+    background-color: #417D7F;
     border-radius: 25px;
     font-size: 1em;
     font-weight: bold;
@@ -40,8 +40,8 @@
 }
 
 .submitBtn:hover {
-    background-color: #5666C8;
-    color: #ccfafc; 
+    background-color: #10f010;
+    color: #fff; 
     cursor:pointer;
 }
 

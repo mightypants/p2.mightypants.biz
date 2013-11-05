@@ -16,7 +16,9 @@
 	<?=$about?>
 	</p>
 
+	<?php if(isset($loggedInUser)): ?> 
 	<a href="/users/edit_profile" class="submitBtn">Edit Profile</a>
+	<?php endif; ?> 
 	<br class="clearfloat">	
 </div>
 

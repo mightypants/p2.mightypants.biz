@@ -40,4 +40,3 @@
 	<p>There is no content to view at this time.  Try following some other users or adding your own posts.</p>         
 <?php endif; ?>  
 </div>
-

@@ -5,7 +5,6 @@
     margin: 5px 15px 5px 10px;
     background-color: #caa;
     float: left;
-
 }
 
 form {
@@ -23,14 +22,14 @@ form {
     width: 130px;
     height: 50px;
     margin: 11px 10px; 
-    background-color: #5666C8;
+    background-color: #417D7F;
     color: #fff; 
     float: left; 
 }
 
 .submitBtn:hover {
-    background-color: #5666C8;
-    color: #ccfafc; 
+    background-color: #10f010;
+    color: #fff; 
     cursor:pointer;
 }
 
@@ -97,7 +96,7 @@ time {
 
 
 .userLink {
-    margin-left: 3px;
+    display: block;
     font-weight: bold;
 }
 

@@ -2,7 +2,7 @@
 <? foreach($users as $user): ?>
     <? if($user['user_id'] != $currUserID): ?>
         <!-- Print this user's name -->
-        <p class="userLink"><?=$user['user_name']?><br />
+        <a class="userLink" href='/users/profile/<?=$user['user_name']?>'><?=$user['user_name']?></a>
 
         <!-- If there exists a connection with this user, show a unfollow link -->
         <? if(isset($connections[$user['user_id']])): ?>

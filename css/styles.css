@@ -5,7 +5,7 @@
 }
 
 body {
-	background-color: #ccfafc;
+	background-color: #000;
 	font-family: Arial, sans-serif;
 	color: #333;
 }
@@ -27,7 +27,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 a:hover, a:active {
-	color: #ccfafc;
+	color: #d1d88d;
 }
 
 .clearfloat {
@@ -35,7 +35,3 @@ a:hover, a:active {
 	clear: both;
 }
 
-#welcomeBot {
-	display: block;
-	margin: 45px;
-}
