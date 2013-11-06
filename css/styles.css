@@ -35,3 +35,9 @@ a:hover, a:active {
 	clear: both;
 }
 
+#foot {
+	margin: 5px 0;
+	text-align: center;
+	color: #fff;
+	font-size: .9em;
+}
