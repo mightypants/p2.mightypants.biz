@@ -4,16 +4,16 @@
 	
 	<div class="profileLeft">
 		<p><strong>E-mail:</strong> <?=$email?><br />
-		<strong>Name:</strong> <?=$first_name . " " . $last_name?></p>
+		<strong>Name:</strong> <?=htmlspecialchars($first_name) . " " . htmlspecialchars($last_name)?></p>
 	</div>
 
 	<div class="profileRight">
-		<p><strong>Hometown:</strong> <?=$hometown?><br />
-		<strong>Age:</strong> <?=$age?></p>
+		<p><strong>Hometown:</strong> <?=htmlspecialchars($hometown)?><br />
+		<strong>Age:</strong> <?=htmlspecialchars($age)?></p>
 	</div>
 
-	<p><strong>About <?=$first_name?>:</strong><br />
-	<?=$about?>
+	<p><strong>About <?=htmlspecialchars($first_name)?>:</strong><br />
+	<?=htmlspecialchars($about)?>
 	</p>
 
 	<?php if(isset($loggedInUser)): ?> 

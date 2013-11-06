@@ -4,8 +4,11 @@
             echo "<p class=\"success\">Your account has been created successfully, please log in below.</p>";
         }
         elseif($message == 'error') {
-        echo "<p class=\"error\">Login failed. Please double check your username and password and try again.</p>";
-        }  
+            echo "<p class=\"error\">Login failed. Please double check your username and password and try again.</p>";
+        }
+        elseif($message == 'access_denied') {
+            echo "<p class=\"error\">The area you have tried to access is for members only.  Please login and try again.</p>";
+        }   
         else {
             echo "<p>Please login with your username and password below.  If you don't have an account, <a href=\"/users/signup\">sign up here</a>.</p>";
         }      

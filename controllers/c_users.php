@@ -5,17 +5,13 @@ class users_controller extends base_controller {
         parent::__construct();
     } 
 
-    public function index() {
-        echo "This is the index page";
-    }
-
-    public function signup($error = NULL) {
+    public function signup($message = NULL) {
         # Setup view
         $output = $this->template;
         $output->title   = "Sign Up";
         $output->contentLeft = View::instance('v_index_index');
         $output->contentRight = View::instance('v_users_signup');
-        $output->contentRight->error = $error;
+        $output->contentRight->message = $message;
 
         # Set client files within the header and body
         $client_files_head = Array("/css/form.css","/css/layout_short.css");
@@ -28,9 +24,12 @@ class users_controller extends base_controller {
     }
 
     public function p_signup() {
+        //check to see if username or e-mail are already taken
+        $user_exists = DB::instance(DB_NAME)->select_field("SELECT user_name FROM users WHERE user_name = '" . $_POST['user_name'] . "'");
+        $email_exists = DB::instance(DB_NAME)->select_field("SELECT email FROM users WHERE email = '" . $_POST['email'] . "'");
 
+        //check that all form fields are valid
         $validForm;
-
         foreach($_POST as $k=>$v) {
             if(!$this->validateFields($k, $v)){
                 $validForm = false;
@@ -40,7 +39,10 @@ class users_controller extends base_controller {
             }
         }
 
-        if(!$validForm) {
+        if ($user_exists || $email_exists) {
+            Router::redirect("/users/signup/user_exists");
+        }
+        elseif (!$validForm) {
             Router::redirect("/users/signup/error");
         }
         else {
@@ -117,7 +119,7 @@ class users_controller extends base_controller {
     public function profile($user_name = NULL) {
 
         if(!$this->user) {
-            Router::redirect('/users/login');
+            Router::redirect('/users/login/access_denied');
         }
 
         $output = $this->template;
@@ -141,7 +143,6 @@ class users_controller extends base_controller {
             $output->content->hometown = $user_info[0]['hometown'];
             $output->content->age = $user_info[0]['age'];
             $output->content->about = $user_info[0]['about'];
- 
         }
         elseif ($this->user) {
             $currUser = $this->user;
@@ -163,8 +164,6 @@ class users_controller extends base_controller {
         # Set client files within the header and body
         $client_files_head = Array("/css/form.css","/css/layout_tall.css","/css/profile.css");
         $output->client_files_head = Utils::load_client_files($client_files_head);  
-        $client_files_body = Array("/js/profile.min.js");
-        $output->client_files_body = Utils::load_client_files($client_files_body);
 
         echo $output;
 
@@ -173,7 +172,7 @@ class users_controller extends base_controller {
     public function edit_profile($error=NULL) {
 
         if(!$this->user) {
-            Router::redirect('/users/login');
+            Router::redirect('/users/login/access_denied');
         }
 
         $output = $this->template;

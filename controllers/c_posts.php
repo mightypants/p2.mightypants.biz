@@ -6,20 +6,8 @@ class posts_controller extends base_controller {
         parent::__construct();
 
         if(!$this->user) {
-            Router::redirect('/users/login');
+            Router::redirect('/users/login/access_denied');
         }
-    }
-
-    public function add() {
-
-        # Setup view
-        $output = $this->template;
-        $output->content = View::instance('v_posts_add');
-        $output->title   = "New Post";
-
-        # Render template
-        echo $output;
-
     }
 
     public function p_add() {
@@ -34,30 +22,33 @@ class posts_controller extends base_controller {
             $_POST['created']  = Time::now();
             $_POST['modified'] = Time::now();
 
-            # Insert
-            # Note we didn't have to sanitize any of the $_POST data because we're using the insert method which does it for us
+            #add new post to the database
             DB::instance(DB_NAME)->insert('posts', $_POST);
 
             Router::redirect("/posts/index/success");
         }
         else {
-        Router::redirect("/posts/index/error");
+            Router::redirect("/posts/index/error");
         }
     }
 
     public function index($message = NULL) {
-
+        #force the user to follow own posts
         $this->follow_self();
+        
         # Set up the View, including posts and curr user profile
         $output = $this->template;
+        
         #call profile_short method to return basic user info to go in dashboard page
         $profile = new users_controller();
         $output->contentLeft = $profile->profile_short();        
+        
+        #get lisf of users to display in left sidebar
         $output->contentLeftBot = $this->users();       
+        
+        #setup main window/posts view
         $output->contentRight = View::instance('v_posts_index');
         $output->contentRight->currUserID = $this->user->user_id;
-
-        
         $output->contentRight->message = $message;
         $output->title   = $this->user->user_name . " - Dashboard";
 
@@ -96,22 +87,16 @@ class posts_controller extends base_controller {
     public function users() {
         $output = $this->template;
         $this->template->contentLeftBot = View::instance("v_posts_users");
-        #$output->title   = "Users";
 
-        # Build the query to get all the users
+        # Build and execute the query to get all the users
         $q = "SELECT *
             FROM users";
-
-        # Execute the query to get all the users. 
-        # Store the result array in the variable $users
         $users = DB::instance(DB_NAME)->select_rows($q);
 
-        # Build the query to figure out who the current user follows
+        # Build and execute the query to figure out who the current user follows
         $q = "SELECT * 
             FROM users_users
             WHERE user_id = ".$this->user->user_id;
-
-        # return users followed
         $connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
 
         # Pass data (users and connections) to the view
@@ -125,28 +110,23 @@ class posts_controller extends base_controller {
 
     public function follow($user_id_followed) {
 
-    # Prepare the data array to be inserted
+        #Build and execute query to create connection
         $data = Array(
             "created" => Time::now(),
             "user_id" => $this->user->user_id,
             "user_id_followed" => $user_id_followed
             );
-
-        # Do the insert
         DB::instance(DB_NAME)->insert('users_users', $data);
 
-        # Send them back
         Router::redirect("/posts/index");
 
     }
 
     public function unfollow($user_id_followed) {
-
         # Delete this connection
         $where_condition = 'WHERE user_id = '.$this->user->user_id.' AND user_id_followed = '.$user_id_followed;
         DB::instance(DB_NAME)->delete('users_users', $where_condition);
 
-        # Send them back
         Router::redirect("/posts/index");
 
     }
@@ -154,14 +134,14 @@ class posts_controller extends base_controller {
     public function follow_self() {
         $currUserID = $this->user->user_id;
         
+        #build and execute the query to see if the user is already following self
         $q = "SELECT *
               FROM users_users 
               WHERE user_id = '$currUserID' 
               AND user_id = '$currUserID' ";
-        # Run the query
-
         $connection = DB::instance(DB_NAME)->select_rows($q);
 
+        #create the connection if not already present
         if (empty($connection)) {
             $data = Array(
             "created" => Time::now(),
@@ -169,7 +149,6 @@ class posts_controller extends base_controller {
             "user_id_followed" => $this->user->user_id   
             );
 
-            # Do the insert
             DB::instance(DB_NAME)->insert('users_users', $data);
         }
 

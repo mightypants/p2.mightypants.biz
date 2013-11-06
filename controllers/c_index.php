@@ -27,11 +27,6 @@ class index_controller extends base_controller {
 
         	$client_files_head = Array("/css/form.css","/css/layout_short.css");
 	        $output->client_files_head = Utils::load_client_files($client_files_head);  
-
-	        # Set client files that need to load before the closing </body> tag
-	        $client_files_body = Array("/js/form.js");
-	        $output->client_files_body = Utils::load_client_files($client_files_body);
-
     	}
 		
 		$output->title = "Very Enjoyable Social Media Website";

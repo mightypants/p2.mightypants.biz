@@ -27,7 +27,7 @@
 			        <?=Time::display($post['created'])?>
 			    </time>
 			    <a class="userLink" href='/users/profile/<?=$post['user_name']?>'><?=$post['user_name']?></a>
-			    <p><?=$post['content']?></p>
+			    <p><?=htmlspecialchars($post['content'])?></p>
 			    <? if ($post['user_id'] == $currUserID): ?>
 			    	<a href="/posts/delete/<?=$post['post_id']?>" class="delPost">Delete post</a></p>
 				<? endif ; ?>

@@ -1,3 +1,7 @@
+.reqField {
+    position: relative;
+}
+
 .fieldName, .reqTextField {
     display: inline-block;
 }
@@ -77,8 +81,21 @@
 
 .tooltip {
     display: none;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 290px;
+    width: 155px;
     margin: 0px 0px 0px 108px;
+    padding: 7px 10px;
+    background-color: #fff;
+    border: 2px solid #A5CACC ;
+    border-radius: 12px;
     font-size: .8em;
-    color: #f01010;
+    color: #333;
+}
+
+.profileTT {
+    left: 372px;
 }
 
