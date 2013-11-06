@@ -50,6 +50,7 @@ form {
 }
 
 .postRight {
+    overflow: auto;
     width: 515px;
     margin-top: 5px;
     float: left;
