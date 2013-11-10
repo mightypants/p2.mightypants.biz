@@ -56,6 +56,6 @@
 	<?php if(isset($client_files_body)) echo $client_files_body; ?>
 
 	</div>
-	<div id="foot">Features: View/Edit profiles | Delete posts</div>
+	<div id="foot">+1 Features: View/Edit profiles | Delete posts</div>
 </body>
 </html>
