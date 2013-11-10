@@ -29,20 +29,17 @@ class users_controller extends base_controller {
         $email_exists = DB::instance(DB_NAME)->select_field("SELECT email FROM users WHERE email = '" . $_POST['email'] . "'");
 
         //check that all form fields are valid
-        $validForm;
+        $formErrors = array();
         foreach($_POST as $k=>$v) {
             if(!$this->validateFields($k, $v)){
-                $validForm = false;
-            }
-            else {
-                $validForm = true;
-            }
+                array_push($formErrors, $k);
+            }          
         }
 
         if ($user_exists || $email_exists) {
             Router::redirect("/users/signup/user_exists");
         }
-        elseif (!$validForm) {
+        elseif (!empty($formErrors)) {
             Router::redirect("/users/signup/error");
         }
         else {
@@ -58,7 +55,6 @@ class users_controller extends base_controller {
 
             # Insert this user into the database
             $user_id = DB::instance(DB_NAME)->insert('users', $_POST); 
-
             Router::redirect("/users/login/success");
         }
     }
@@ -100,7 +96,6 @@ class users_controller extends base_controller {
             setcookie("token", $token, strtotime('+1 year'), '/');
             Router::redirect("/posts/index");
         }
-
 }
 
     public function logout() {
@@ -203,18 +198,15 @@ class users_controller extends base_controller {
 
     public function p_edit_profile() {
 
-        $validForm;
-
+        //check that all form fields are valid
+        $formErrors = array();
         foreach($_POST as $k=>$v) {
             if(!$this->validateFields($k, $v)){
-                $validForm = false;
-            }
-            else {
-                $validForm = true;
-            }
+                array_push($formErrors, $k);
+            }          
         }
 
-        if(!$validForm) {
+        if(!empty($formErrors)) {
             Router::redirect('/users/edit_profile/error');
         }
         else {
@@ -286,7 +278,7 @@ class users_controller extends base_controller {
                     $this->validateAlphaNum($value); 
         }
         else {
-            return true;
+            return false;
         }
     }
 
